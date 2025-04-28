@@ -5,7 +5,8 @@ import {
   StyleSheet, 
   ImageBackground, 
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  ImageSourcePropType
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 
@@ -13,7 +14,7 @@ import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 type Club = {
   id: string;
   name: string;
-  image: string;
+  image: ImageSourcePropType;
   rating: number;
   price: string;
   distance: string;
@@ -26,13 +27,20 @@ type Club = {
 type ClubCardProps = {
   club: Club;
   isSmall?: boolean;
+  navigation?: any;
 };
 
 const { width } = Dimensions.get('window');
 
-const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false }) => {
+const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }) => {
   const cardWidth = isSmall ? width * 0.8 : width * 0.85;
   const cardHeight = isSmall ? 180 : 280;
+
+  const handleReservePress = () => {
+    if (navigation) {
+      navigation.navigate('Reservation', { club });
+    }
+  };
 
   return (
     <TouchableOpacity 
@@ -46,7 +54,7 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false }) => {
       activeOpacity={0.9}
     >
       <ImageBackground 
-        source={{ uri: club.image }} 
+        source={club.image} 
         style={styles.image}
         resizeMode="cover"
         imageStyle={styles.imageStyle}
@@ -83,7 +91,10 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false }) => {
             </View>
 
             {!isSmall && (
-              <TouchableOpacity style={styles.reserveButton}>
+              <TouchableOpacity 
+                style={styles.reserveButton}
+                onPress={handleReservePress}
+              >
                 <Text style={styles.reserveButtonText}>Reservar Ahora</Text>
               </TouchableOpacity>
             )}

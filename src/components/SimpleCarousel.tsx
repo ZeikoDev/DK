@@ -5,7 +5,8 @@ import {
   Dimensions, 
   StyleSheet,
   NativeScrollEvent,
-  NativeSyntheticEvent
+  NativeSyntheticEvent,
+  ImageSourcePropType
 } from 'react-native';
 import { COLORS, SIZES } from '../styles/theme';
 import ClubCard from './ClubCard';
@@ -18,7 +19,7 @@ const OFFSET = (width - ITEM_WIDTH) / 2;
 type Club = {
   id: string;
   name: string;
-  image: string;
+  image: ImageSourcePropType;
   rating: number;
   price: string;
   distance: string;
@@ -30,9 +31,10 @@ type Club = {
 type SimpleCarouselProps = {
   data: Club[];
   onSnapToItem?: (index: number) => void;
+  navigation?: any;
 }
 
-const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem }) => {
+const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem, navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
@@ -69,7 +71,7 @@ const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem }) =
   const renderItem = ({ item }: { item: Club }) => {
     return (
       <View style={{ width: ITEM_WIDTH, marginHorizontal: ITEM_MARGIN / 2 }}>
-        <ClubCard club={item} />
+        <ClubCard club={item} navigation={navigation} />
       </View>
     );
   };

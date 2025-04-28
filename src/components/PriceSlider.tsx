@@ -38,7 +38,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({ initialPrice = 50000, minPric
         onValueChange={handleValueChange}
         minimumTrackTintColor={COLORS.secondary}
         maximumTrackTintColor={COLORS.border}
-        thumbTintColor={COLORS.primary}
+        thumbTintColor={COLORS.secondary}
         step={1000}  // Paso de 1,000 COP
       />
       <Text style={styles.price}>COP ${formatPrice(price)}</Text>

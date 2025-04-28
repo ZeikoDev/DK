@@ -16,56 +16,80 @@ import SimpleCarousel from '../components/SimpleCarousel';
 import PriceSlider from '../components/PriceSlider';
 import PartySelector from '../components/PartySelector';
 import DateTimeSelector from '../components/DateTimeSelector';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/AppNavigation';
 
-// Datos de ejemplo para las discotecas
 const CLUBS_DATA = [
   {
     id: '1',
-    name: 'Miranda',
-    image: 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location=Medellin,Colombia',
+    name: 'Dulcinea',
+    image: require('../../assets/clubimages/dulcinea.jpeg'),  // Referencia a la imagen local
     rating: 4.1,
-    price: '$$',
-    distance: '0.5 km',
-    openTime: '19:00',
-    capacity: 150,
-    location: 'El Poblado'
+    price: '$$$',
+    distance: '', 
+    openTime: '21:30',
+    capacity: 250,
+    location: 'Laureles',
+    latitude: 6.2297, 
+    longitude: -75.5695,
   },
   {
     id: '2',
-    name: 'Elektric',
-    image: 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&auto=format&fit=crop',
-    rating: 4.5,
-    price: '€€',
-    distance: '1.2 km',
-    openTime: '22:00',
-    capacity: 200,
-    location: 'Zona Rosa'
+    name: 'Miranda',
+    image: require('../../assets/clubimages/miranda.jpeg'),  // Referencia a la imagen local
+    rating: 4.1,
+    price: '$$',
+    distance: '', 
+    openTime: '19:00',
+    capacity: 300,
+    location: 'El Poblado',
+    latitude: 6.1990,
+    longitude: -75.5737,
   },
   {
     id: '3',
-    name: 'Ultraviolet',
-    image: 'https://images.unsplash.com/photo-1571235705574-62d768598968?w=800&auto=format&fit=crop',
-    rating: 4.9,
-    price: '€€€€',
-    distance: '2.1 km',
-    openTime: '23:30',
-    capacity: 180,
-    location: 'Condesa'
+    name: 'La Logia',
+    image: require('../../assets/clubimages/lalogia.jpeg'),  // Referencia a la imagen local
+    rating: 4.1,
+    price: '$$',
+    distance: '', 
+    openTime: '21:30',
+    capacity: 200,
+    location: 'Laureles',
+    latitude: 6.2431,
+    longitude: -75.5791,
   },
   {
     id: '4',
-    name: 'Bassline',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop',
-    rating: 4.7,
-    price: '€€',
-    distance: '3.0 km',
-    openTime: '22:30',
-    capacity: 250,
-    location: 'Roma Norte'
+    name: 'Tutaina',
+    image: require('../../assets/clubimages/tutaina_poblado.jpeg'),  // Referencia a la imagen local
+    rating: 4.4,
+    price: '$',
+    distance: '', 
+    openTime: '19:00',
+    capacity: 220,
+    location: 'El Poblado',
+    latitude: 6.1995,
+    longitude: -75.5728,
+  },
+  {
+    id: '5',
+    name: 'La Julieta',
+    image: require('../../assets/clubimages/julieta.jpeg'),  // Referencia a la imagen local
+    rating: 4.1,
+    price: '$',
+    distance: '', 
+    openTime: '19:00',
+    capacity: 180,
+    location: 'Laureles',
+    latitude: 6.2423,
+    longitude: -75.5802,
   },
 ];
 
-const HomeScreen = () => {
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('22:00');
   const [peopleCount, setPeopleCount] = useState(4);
@@ -89,6 +113,7 @@ const HomeScreen = () => {
         <SimpleCarousel 
           data={CLUBS_DATA}
           onSnapToItem={handleSnapToItem}
+          navigation={navigation}
         />
 
         <View style={styles.searchSection}>
