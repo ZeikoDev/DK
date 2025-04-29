@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity,
-  Modal,
-  FlatList
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 
 interface PartySelectorProps {
@@ -15,14 +8,14 @@ interface PartySelectorProps {
   onValueChange?: (value: number) => void;
 }
 
-const PartySelector: React.FC<PartySelectorProps> = ({ 
-  initialValue = 4, 
+const PartySelector: React.FC<PartySelectorProps> = ({
+  initialValue = 4,
   maxParty = 20,
-  onValueChange 
+  onValueChange,
 }) => {
   const [people, setPeople] = useState(initialValue);
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const peopleOptions = Array.from({ length: maxParty }, (_, index) => index + 1);
 
   const handleSelectPeople = (value: number) => {
@@ -35,11 +28,10 @@ const PartySelector: React.FC<PartySelectorProps> = ({
 
   return (
     <View>
-      <TouchableOpacity 
-        style={styles.selector} 
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.selectorText}>{people} {people === 1 ? 'Persona' : 'Personas'}</Text>
+      <TouchableOpacity style={styles.selector} onPress={() => setModalVisible(true)}>
+        <Text style={styles.selectorText}>
+          {people} {people === 1 ? 'Persona' : 'Personas'}
+        </Text>
         <Text style={styles.selectorIcon}>▼</Text>
       </TouchableOpacity>
 
@@ -53,31 +45,20 @@ const PartySelector: React.FC<PartySelectorProps> = ({
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Seleccionar Personas</Text>
-              <TouchableOpacity 
-                onPress={() => setModalVisible(false)}
-                style={styles.closeButton}
-              >
+              <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
                 <Text style={styles.closeButtonText}>✕</Text>
               </TouchableOpacity>
             </View>
 
             <FlatList
               data={peopleOptions}
-              keyExtractor={(item) => item.toString()}
+              keyExtractor={item => item.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity 
-                  style={[
-                    styles.optionItem,
-                    people === item && styles.selectedOptionItem
-                  ]}
+                <TouchableOpacity
+                  style={[styles.optionItem, people === item && styles.selectedOptionItem]}
                   onPress={() => handleSelectPeople(item)}
                 >
-                  <Text 
-                    style={[
-                      styles.optionText,
-                      people === item && styles.selectedOptionText
-                    ]}
-                  >
+                  <Text style={[styles.optionText, people === item && styles.selectedOptionText]}>
                     {item} {item === 1 ? 'Persona' : 'Personas'}
                   </Text>
                 </TouchableOpacity>
@@ -174,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PartySelector; 
+export default PartySelector;

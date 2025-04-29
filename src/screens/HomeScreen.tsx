@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -7,7 +7,8 @@ import {
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  Alert
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 import ClubCard from '../components/ClubCard';
@@ -23,33 +24,33 @@ const CLUBS_DATA = [
   {
     id: '1',
     name: 'Dulcinea',
-    image: require('../../assets/clubimages/dulcinea.jpeg'),  // Referencia a la imagen local
+    image: require('../../assets/clubimages/dulcinea.jpeg'), 
     rating: 4.1,
     price: '$$$',
-    distance: '', 
+    distance: '',
     openTime: '21:30',
     capacity: 250,
     location: 'Laureles',
-    latitude: 6.2297, 
+    latitude: 6.2297,
     longitude: -75.5695,
   },
   {
     id: '2',
     name: 'Miranda',
-    image: require('../../assets/clubimages/miranda.jpeg'),  // Referencia a la imagen local
+    image: require('../../assets/clubimages/miranda.jpeg'), 
     rating: 4.1,
     price: '$$',
-    distance: '', 
+    distance: '',
     openTime: '19:00',
     capacity: 300,
     location: 'El Poblado',
-    latitude: 6.1990,
+    latitude: 6.199,
     longitude: -75.5737,
   },
   {
     id: '3',
     name: 'La Logia',
-    image: require('../../assets/clubimages/lalogia.jpeg'),  // Referencia a la imagen local
+    image: require('../../assets/clubimages/lalogia.jpeg'), 
     rating: 4.1,
     price: '$$',
     distance: '', 
@@ -62,7 +63,7 @@ const CLUBS_DATA = [
   {
     id: '4',
     name: 'Tutaina',
-    image: require('../../assets/clubimages/tutaina_poblado.jpeg'),  // Referencia a la imagen local
+    image: require('../../assets/clubimages/tutaina_poblado.jpeg'),
     rating: 4.4,
     price: '$',
     distance: '', 
@@ -75,7 +76,7 @@ const CLUBS_DATA = [
   {
     id: '5',
     name: 'La Julieta',
-    image: require('../../assets/clubimages/julieta.jpeg'),  // Referencia a la imagen local
+    image: require('../../assets/clubimages/julieta.jpeg'),
     rating: 4.1,
     price: '$',
     distance: '', 
@@ -85,6 +86,97 @@ const CLUBS_DATA = [
     latitude: 6.2423,
     longitude: -75.5802,
   },
+  {
+    id: '6',
+    name: 'Salón Amador',
+    image: require('../../assets/clubimages/dulcinea.jpeg'),
+    rating: 4.5,
+    price: '$$$',
+    distance: '',
+    openTime: '22:00',
+    capacity: 400,
+    location: 'El Poblado',
+    latitude: 6.2010,
+    longitude: -75.5720,
+  },
+  {
+    id: '7',
+    name: 'Calle 9+1',
+    image: require('../../assets/clubimages/miranda.jpeg'),
+    rating: 4.2,
+    price: '$$',
+    distance: '',
+    openTime: '20:00',
+    capacity: 280,
+    location: 'Centro',
+    latitude: 6.2470,
+    longitude: -75.5746,
+  },
+  {
+    id: '8',
+    name: 'Babylon Club',
+    image: require('../../assets/clubimages/lalogia.jpeg'),
+    rating: 4.3,
+    price: '$$$',
+    distance: '',
+    openTime: '23:00',
+    capacity: 350,
+    location: 'El Poblado',
+    latitude: 6.2030,
+    longitude: -75.5710,
+  },
+  {
+    id: '9',
+    name: 'Perro Negro',
+    image: require('../../assets/clubimages/tutaina_poblado.jpeg'),
+    rating: 4.0,
+    price: '$',
+    distance: '',
+    openTime: '18:00',
+    capacity: 150,
+    location: 'Envigado',
+    latitude: 6.1670,
+    longitude: -75.5830,
+  },
+  {
+    id: '10',
+    name: 'Vintrash',
+    image: require('../../assets/clubimages/julieta.jpeg'),
+    rating: 4.6,
+    price: '$$',
+    distance: '',
+    openTime: '20:30',
+    capacity: 200,
+    location: 'Provenza',
+    latitude: 6.2090,
+    longitude: -75.5690,
+  },
+  {
+    id: '11',
+    name: 'Bolivar Club',
+    image: require('../../assets/clubimages/dulcinea.jpeg'),
+    rating: 4.2,
+    price: '$$$',
+    distance: '',
+    openTime: '22:30',
+    capacity: 320,
+    location: 'Centro',
+    latitude: 6.2510,
+    longitude: -75.5690,
+  },
+  {
+    id: '12',
+    name: 'Envy Rooftop',
+    image: require('../../assets/clubimages/miranda.jpeg'),
+    rating: 4.7,
+    price: '$$$',
+    distance: '',
+    openTime: '21:00',
+    capacity: 280,
+    location: 'El Poblado',
+    latitude: 6.2080,
+    longitude: -75.5670,
+  }
 ];
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -95,9 +187,75 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [peopleCount, setPeopleCount] = useState(4);
   const [maxPrice, setMaxPrice] = useState(500000);
   const [activeClubIndex, setActiveClubIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredClubs, setFilteredClubs] = useState(CLUBS_DATA);
+  const [showFiltered, setShowFiltered] = useState(false);
+
+  // Función para convertir el precio simbólico ($, $$, $$$) a un valor numérico aproximado
+  const getPriceValue = (priceSymbol: string): number => {
+    switch (priceSymbol) {
+      case '$': return 100000; // Económico: ~100,000 COP
+      case '$$': return 300000; // Moderado: ~300,000 COP
+      case '$$$': return 500000; // Costoso: ~500,000 COP
+      default: return 1000000; // Muy costoso: ~1,000,000 COP
+    }
+  };
+
+  // Función para filtrar clubes por texto de búsqueda
+  const filterBySearchQuery = (clubs: typeof CLUBS_DATA, query: string) => {
+    if (!query.trim()) return clubs;
+    
+    const lowercaseQuery = query.toLowerCase().trim();
+    return clubs.filter(club => 
+      club.name.toLowerCase().includes(lowercaseQuery) || 
+      (club.location && club.location.toLowerCase().includes(lowercaseQuery))
+    );
+  };
+
+  // Función para filtrar clubes por todos los criterios
+  const applyAllFilters = () => {
+    let results = [...CLUBS_DATA];
+    
+    // Filtrar por texto de búsqueda
+    if (searchQuery.trim()) {
+      results = filterBySearchQuery(results, searchQuery);
+    }
+    
+    // Filtrar por precio máximo
+    results = results.filter(club => getPriceValue(club.price) <= maxPrice);
+    
+    // Filtrar por hora de apertura (clubes que ya estén abiertos a la hora seleccionada)
+    const selectedTimeValue = parseInt(selectedTime.replace(':', ''));
+    results = results.filter(club => {
+      const clubOpenTimeValue = parseInt(club.openTime.replace(':', ''));
+      return clubOpenTimeValue <= selectedTimeValue;
+    });
+    
+    // Actualizar el estado con los resultados filtrados
+    setFilteredClubs(results);
+    setShowFiltered(true);
+    
+    // Mostrar mensaje si no hay resultados
+    if (results.length === 0) {
+      Alert.alert(
+        'Sin resultados',
+        'No se encontraron discotecas que coincidan con tus criterios de búsqueda. Intenta ajustar los filtros.',
+        [{ text: 'OK', onPress: () => setShowFiltered(false) }]
+      );
+    }
+  };
 
   const handleSnapToItem = (index: number) => {
     setActiveClubIndex(index);
+  };
+
+  const handleSearch = (text: string) => {
+    setSearchQuery(text);
+    
+    // Si el usuario borra la búsqueda, volvemos a mostrar todos los clubes
+    if (!text.trim()) {
+      setShowFiltered(false);
+    }
   };
 
   return (
@@ -111,13 +269,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <SimpleCarousel 
-          data={CLUBS_DATA}
+          data={showFiltered ? filteredClubs : CLUBS_DATA}
           onSnapToItem={handleSnapToItem}
           navigation={navigation}
         />
 
         <View style={styles.searchSection}>
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} />
 
           <View style={styles.filterBlock}>
             <Text style={styles.filterTitle}>cuando y a que horas?</Text>
@@ -142,7 +300,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             />
 
             <View style={styles.findButtonContainer}>
-              <TouchableOpacity style={styles.findButton}>
+              <TouchableOpacity 
+                style={styles.findButton}
+                onPress={applyAllFilters}
+              >
                 <Text style={styles.findButtonText}>Buscar Discotecas</Text>
               </TouchableOpacity>
             </View>
@@ -209,4 +370,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen; 
+export default HomeScreen;

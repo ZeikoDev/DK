@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  StyleSheet,
   TouchableOpacity,
   Modal,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
 import { COLORS, SIZES } from '../styles/theme';
 
@@ -17,14 +17,23 @@ interface DateTimeSelectorProps {
 }
 
 const TIMES = [
-  '18:00', '19:00', '20:00', '21:00', '22:00', 
-  '23:00', '00:00', '01:00', '02:00', '03:00', '04:00'
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00',
+  '00:00',
+  '01:00',
+  '02:00',
+  '03:00',
+  '04:00',
 ];
 
-const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({ 
-  initialDate = new Date(), 
+const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
+  initialDate = new Date(),
   onDateChange,
-  onTimeChange
+  onTimeChange,
 }) => {
   const [selectedDate, setSelectedDate] = useState(initialDate);
   const [selectedTime, setSelectedTime] = useState('22:00');
@@ -35,13 +44,13 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
   const getNextWeekDates = () => {
     const dates = [];
     const today = new Date();
-    
+
     for (let i = 0; i < 14; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       dates.push(date);
     }
-    
+
     return dates;
   };
 
@@ -49,7 +58,7 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
     return date.toLocaleDateString('es-ES', {
       weekday: 'short',
       day: 'numeric',
-      month: 'short'
+      month: 'short',
     });
   };
 
@@ -57,7 +66,7 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
     // Convertir el formato 24h a 12h con AM/PM
     const [hour, minute] = time.split(':');
     const hourNum = parseInt(hour, 10);
-    
+
     if (hourNum === 0) {
       return `12:${minute} AM`;
     } else if (hourNum < 12) {
@@ -88,18 +97,12 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.dateTimeContainer}>
-        <TouchableOpacity 
-          style={styles.dateSelector}
-          onPress={() => setDateModalVisible(true)}
-        >
+        <TouchableOpacity style={styles.dateSelector} onPress={() => setDateModalVisible(true)}>
           <Text style={styles.dateIcon}>📅</Text>
           <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.timeSelector}
-          onPress={() => setTimeModalVisible(true)}
-        >
+
+        <TouchableOpacity style={styles.timeSelector} onPress={() => setTimeModalVisible(true)}>
           <Text style={styles.timeIcon}>🕙</Text>
           <Text style={styles.timeText}>{formatTimeForDisplay(selectedTime)}</Text>
         </TouchableOpacity>
@@ -116,28 +119,30 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Seleccionar Fecha</Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => setDateModalVisible(false)}
                 style={styles.closeButton}
               >
                 <Text style={styles.closeButtonText}>✕</Text>
               </TouchableOpacity>
             </View>
-            
+
             <ScrollView showsVerticalScrollIndicator={false}>
               {getNextWeekDates().map((date, index) => (
-                <TouchableOpacity 
+                <TouchableOpacity
                   key={index}
                   style={[
                     styles.optionItem,
-                    selectedDate.toDateString() === date.toDateString() && styles.selectedOptionItem
+                    selectedDate.toDateString() === date.toDateString() &&
+                      styles.selectedOptionItem,
                   ]}
                   onPress={() => handleSelectDate(date)}
                 >
-                  <Text 
+                  <Text
                     style={[
                       styles.optionText,
-                      selectedDate.toDateString() === date.toDateString() && styles.selectedOptionText
+                      selectedDate.toDateString() === date.toDateString() &&
+                        styles.selectedOptionText,
                     ]}
                   >
                     {formatDate(date)}
@@ -160,29 +165,23 @@ const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Seleccionar Hora</Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => setTimeModalVisible(false)}
                 style={styles.closeButton}
               >
                 <Text style={styles.closeButtonText}>✕</Text>
               </TouchableOpacity>
             </View>
-            
+
             <ScrollView showsVerticalScrollIndicator={false}>
               {TIMES.map((time, index) => (
-                <TouchableOpacity 
+                <TouchableOpacity
                   key={index}
-                  style={[
-                    styles.optionItem,
-                    selectedTime === time && styles.selectedOptionItem
-                  ]}
+                  style={[styles.optionItem, selectedTime === time && styles.selectedOptionItem]}
                   onPress={() => handleSelectTime(time)}
                 >
-                  <Text 
-                    style={[
-                      styles.optionText,
-                      selectedTime === time && styles.selectedOptionText
-                    ]}
+                  <Text
+                    style={[styles.optionText, selectedTime === time && styles.selectedOptionText]}
                   >
                     {formatTimeForDisplay(time)}
                   </Text>
@@ -302,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DateTimeSelector; 
+export default DateTimeSelector;

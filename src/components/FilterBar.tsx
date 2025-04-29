@@ -1,12 +1,5 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity,
-  ScrollView,
-  TextInput
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 
 type FilterBarProps = {
@@ -26,12 +19,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
   date,
   setDate,
   people,
-  setPeople
+  setPeople,
 }) => {
   const formattedDate = date.toLocaleDateString('es-ES', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
   });
 
   const increaseDate = () => {
@@ -61,24 +54,23 @@ const FilterBar: React.FC<FilterBarProps> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Filtros</Text>
-      
+
       <View style={styles.filterSection}>
         <Text style={styles.sectionTitle}>Precio:</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.priceRanges}>
-            {PRICE_RANGES.map((range) => (
-              <TouchableOpacity 
-                key={range} 
-                style={[
-                  styles.priceButton, 
-                  priceRange === range && styles.priceButtonActive
-                ]}
+            {PRICE_RANGES.map(range => (
+              <TouchableOpacity
+                key={range}
+                style={[styles.priceButton, priceRange === range && styles.priceButtonActive]}
                 onPress={() => setPriceRange(range)}
               >
-                <Text style={[
-                  styles.priceButtonText,
-                  priceRange === range && styles.priceButtonTextActive
-                ]}>
+                <Text
+                  style={[
+                    styles.priceButtonText,
+                    priceRange === range && styles.priceButtonTextActive,
+                  ]}
+                >
                   {range}
                 </Text>
               </TouchableOpacity>
@@ -86,7 +78,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           </View>
         </ScrollView>
       </View>
-      
+
       <View style={styles.filterSection}>
         <Text style={styles.sectionTitle}>Fecha:</Text>
         <View style={styles.dateSelector}>
@@ -99,7 +91,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           </TouchableOpacity>
         </View>
       </View>
-      
+
       <View style={styles.filterSection}>
         <Text style={styles.sectionTitle}>Personas:</Text>
         <View style={styles.peopleSelector}>
@@ -112,7 +104,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           </TouchableOpacity>
         </View>
       </View>
-      
+
       <TouchableOpacity style={styles.applyButton}>
         <Text style={styles.applyButtonText}>Aplicar Filtros</Text>
       </TouchableOpacity>
@@ -233,4 +225,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FilterBar; 
+export default FilterBar;

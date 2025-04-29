@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  ImageBackground, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
   TouchableOpacity,
   Dimensions,
-  ImageSourcePropType
+  ImageSourcePropType,
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 
@@ -43,18 +43,18 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
   };
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
-        styles.container, 
-        { 
-          width: cardWidth, 
+        styles.container,
+        {
+          width: cardWidth,
           height: cardHeight,
-        }
+        },
       ]}
       activeOpacity={0.9}
     >
-      <ImageBackground 
-        source={club.image} 
+      <ImageBackground
+        source={club.image}
         style={styles.image}
         resizeMode="cover"
         imageStyle={styles.imageStyle}
@@ -83,7 +83,7 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
               <Text style={styles.locationIcon}>📍</Text>
               <Text style={styles.location}>{club.location || 'Downtown'}</Text>
             </View>
-            
+
             <View style={styles.indicators}>
               <View style={[styles.indicator, styles.activeIndicator]} />
               <View style={styles.indicator} />
@@ -91,10 +91,7 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
             </View>
 
             {!isSmall && (
-              <TouchableOpacity 
-                style={styles.reserveButton}
-                onPress={handleReservePress}
-              >
+              <TouchableOpacity style={styles.reserveButton} onPress={handleReservePress}>
                 <Text style={styles.reserveButtonText}>Reservar Ahora</Text>
               </TouchableOpacity>
             )}
@@ -246,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClubCard; 
+export default ClubCard;

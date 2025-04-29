@@ -19,7 +19,7 @@ export type RootStackParamList = {
       openTime: string;
       capacity: number;
       location?: string;
-    }
+    };
   };
 };
 

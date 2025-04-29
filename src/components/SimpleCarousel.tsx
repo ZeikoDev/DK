@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { 
-  View, 
+import {
+  View,
   FlatList,
-  Dimensions, 
+  Dimensions,
   StyleSheet,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  ImageSourcePropType
+  ImageSourcePropType,
 } from 'react-native';
 import { COLORS, SIZES } from '../styles/theme';
 import ClubCard from './ClubCard';
@@ -32,7 +32,7 @@ type SimpleCarouselProps = {
   data: Club[];
   onSnapToItem?: (index: number) => void;
   navigation?: any;
-}
+};
 
 const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem, navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -82,12 +82,12 @@ const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem, nav
         ref={flatListRef}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={ITEM_WIDTH + ITEM_MARGIN}
-        snapToAlignment='center'
-        decelerationRate='fast'
+        snapToAlignment="center"
+        decelerationRate="fast"
         contentContainerStyle={{ paddingHorizontal: OFFSET - ITEM_MARGIN / 2 }}
         onScroll={handleScroll}
         onViewableItemsChanged={handleViewableItemsChanged}
@@ -97,15 +97,12 @@ const SimpleCarousel: React.FC<SimpleCarouselProps> = ({ data, onSnapToItem, nav
         maxToRenderPerBatch={3}
         windowSize={5}
       />
-      
+
       <View style={styles.pagination}>
         {data.map((_, index) => (
           <View
             key={`dot-${index}`}
-            style={[
-              styles.paginationDot,
-              activeIndex === index ? styles.paginationDotActive : {}
-            ]}
+            style={[styles.paginationDot, activeIndex === index ? styles.paginationDotActive : {}]}
           />
         ))}
       </View>
@@ -135,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SimpleCarousel; 
+export default SimpleCarousel;
