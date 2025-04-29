@@ -79,9 +79,18 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
 
           <View style={styles.bottomContent}>
             <Text style={styles.name}>{club.name}</Text>
-            <View style={styles.locationRow}>
-              <Text style={styles.locationIcon}>📍</Text>
-              <Text style={styles.location}>{club.location || 'Downtown'}</Text>
+            <View style={styles.infoContainer}>
+              <View style={styles.locationRow}>
+                <Text style={styles.locationIcon}>🏙️</Text>
+                <Text style={styles.location}>{club.location || 'Downtown'}</Text>
+              </View>
+
+              {club.distance && (
+                <View style={styles.distanceRow}>
+                  <Text style={styles.distanceIcon}>📍</Text>
+                  <Text style={styles.distance}>{club.distance}</Text>
+                </View>
+              )}
             </View>
 
             <View style={styles.indicators}>
@@ -103,7 +112,11 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
         <View style={styles.infoRow}>
           <Text style={styles.infoText}>💰 {club.price}</Text>
           <Text style={styles.infoText}>🕒 {club.openTime}</Text>
-          <Text style={styles.infoText}>👥 {club.capacity}</Text>
+          {club.distance ? (
+            <Text style={styles.infoText}>📍 {club.distance}</Text>
+          ) : (
+            <Text style={styles.infoText}>👥 {club.capacity}</Text>
+          )}
         </View>
       )}
     </TouchableOpacity>
@@ -184,16 +197,32 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
+  infoContainer: {
+    flexDirection: 'column',
+    marginBottom: 12,
+  },
   locationRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 4,
+  },
+  distanceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   locationIcon: {
     fontSize: SIZES.medium,
     marginRight: 4,
   },
+  distanceIcon: {
+    fontSize: SIZES.medium,
+    marginRight: 4,
+  },
   location: {
+    color: COLORS.text,
+    fontSize: SIZES.medium,
+  },
+  distance: {
     color: COLORS.text,
     fontSize: SIZES.medium,
   },

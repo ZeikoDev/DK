@@ -7,9 +7,9 @@ type SearchBarProps = {
   placeholder?: string;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ 
+const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
-  placeholder = "Buscar discotecas o ubicaciones" 
+  placeholder = 'Buscar discotecas o ubicaciones',
 }) => {
   const [searchText, setSearchText] = useState('');
 
