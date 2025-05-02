@@ -61,4 +61,21 @@ The app requires location permissions to provide distance-based features.
 Contributions are welcome! Please submit pull requests or open issues.
 
 ## License
-[Add your license information here]
+Copyright © 2025 Juan Camilo González Hoyos, Emmanuel Monsalve Parra y Jerónimo Grisales Múnera
+Todos los derechos reservados.
+
+Este software está protegido por las leyes internacionales de derechos de autor, incluyendo el Convenio de Berna y las legislaciones nacionales aplicables.
+
+Nota: Aunque el presente código se encuentre alojado en el repositorio de la organización o cuenta denominada tlh, la titularidad de los derechos patrimoniales y morales sobre el código fuente y todos sus componentes pertenece exclusivamente a Juan Camilo González Hoyos, Emmanuel Monsalve Parra y Jerónimo Grisales Múnera.
+
+Se concede al público únicamente una licencia limitada, revocable, no exclusiva y no transferible para la visualización del código fuente con fines informativos o de evaluación.
+
+Queda expresamente prohibido, sin autorización previa y por escrito de los autores:
+	•	Realizar forks de este repositorio o clonarlo públicamente.
+	•	Copiar, reproducir, distribuir, modificar, adaptar, traducir o crear obras derivadas del código o cualquier componente del mismo.
+	•	Utilizar el software, en todo o en parte, con fines personales, académicos, comerciales o de cualquier otra índole.
+	•	Redistribuir este código en cualquier forma o medio.
+
+Cualquier uso no autorizado constituirá una violación a los derechos de propiedad intelectual de los autores y podrá ser objeto de acciones legales conforme a la jurisdicción aplicable.
+
+Para consultas relacionadas con licencias o autorizaciones, por favor comunicarse a: jcgonzalez4183@gmail.com.
