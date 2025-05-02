@@ -61,7 +61,7 @@ The app requires location permissions to provide distance-based features.
 Contributions are welcome! Please submit pull requests or open issues.
 
 ## License
-##English
+## English
 Copyright © 2025 Juan Camilo González Hoyos, Emmanuel Monsalve Parra, and Jerónimo Grisales Múnera
 All rights reserved.
 
@@ -81,7 +81,7 @@ Any unauthorized use constitutes a violation of the authors’ intellectual prop
 
 For inquiries regarding licensing or permissions, please contact: jcgonzalez4183@gmail.com
 
-##Spanish
+## Spanish
 Copyright © 2025 Juan Camilo González Hoyos, Emmanuel Monsalve Parra y Jerónimo Grisales Múnera
 Todos los derechos reservados.
 
