@@ -1,6 +1,12 @@
 declare module 'react-native-snap-carousel' {
   import { Component } from 'react';
-  import { ScrollViewProps, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, StyleProp } from 'react-native';
+  import {
+    ScrollViewProps,
+    ViewStyle,
+    NativeSyntheticEvent,
+    NativeScrollEvent,
+    StyleProp,
+  } from 'react-native';
 
   export interface AdditionalParallaxProps {
     carouselRef?: any;
@@ -80,4 +86,4 @@ declare module 'react-native-snap-carousel' {
   export class Pagination extends Component<any> {}
 
   export default Carousel;
-} 
+}

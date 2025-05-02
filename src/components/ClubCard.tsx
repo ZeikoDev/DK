@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  ImageBackground, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
   TouchableOpacity,
   Dimensions,
-  ImageSourcePropType
+  ImageSourcePropType,
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 
@@ -43,18 +43,18 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
   };
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
-        styles.container, 
-        { 
-          width: cardWidth, 
+        styles.container,
+        {
+          width: cardWidth,
           height: cardHeight,
-        }
+        },
       ]}
       activeOpacity={0.9}
     >
-      <ImageBackground 
-        source={club.image} 
+      <ImageBackground
+        source={club.image}
         style={styles.image}
         resizeMode="cover"
         imageStyle={styles.imageStyle}
@@ -79,11 +79,20 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
 
           <View style={styles.bottomContent}>
             <Text style={styles.name}>{club.name}</Text>
-            <View style={styles.locationRow}>
-              <Text style={styles.locationIcon}>📍</Text>
-              <Text style={styles.location}>{club.location || 'Downtown'}</Text>
+            <View style={styles.infoContainer}>
+              <View style={styles.locationRow}>
+                <Text style={styles.locationIcon}>🏙️</Text>
+                <Text style={styles.location}>{club.location || 'Downtown'}</Text>
+              </View>
+
+              {club.distance && (
+                <View style={styles.distanceRow}>
+                  <Text style={styles.distanceIcon}>📍</Text>
+                  <Text style={styles.distance}>{club.distance}</Text>
+                </View>
+              )}
             </View>
-            
+
             <View style={styles.indicators}>
               <View style={[styles.indicator, styles.activeIndicator]} />
               <View style={styles.indicator} />
@@ -91,10 +100,7 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
             </View>
 
             {!isSmall && (
-              <TouchableOpacity 
-                style={styles.reserveButton}
-                onPress={handleReservePress}
-              >
+              <TouchableOpacity style={styles.reserveButton} onPress={handleReservePress}>
                 <Text style={styles.reserveButtonText}>Reservar Ahora</Text>
               </TouchableOpacity>
             )}
@@ -106,7 +112,11 @@ const ClubCard: React.FC<ClubCardProps> = ({ club, isSmall = false, navigation }
         <View style={styles.infoRow}>
           <Text style={styles.infoText}>💰 {club.price}</Text>
           <Text style={styles.infoText}>🕒 {club.openTime}</Text>
-          <Text style={styles.infoText}>👥 {club.capacity}</Text>
+          {club.distance ? (
+            <Text style={styles.infoText}>📍 {club.distance}</Text>
+          ) : (
+            <Text style={styles.infoText}>👥 {club.capacity}</Text>
+          )}
         </View>
       )}
     </TouchableOpacity>
@@ -187,16 +197,32 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
+  infoContainer: {
+    flexDirection: 'column',
+    marginBottom: 12,
+  },
   locationRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 4,
+  },
+  distanceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   locationIcon: {
     fontSize: SIZES.medium,
     marginRight: 4,
   },
+  distanceIcon: {
+    fontSize: SIZES.medium,
+    marginRight: 4,
+  },
   location: {
+    color: COLORS.text,
+    fontSize: SIZES.medium,
+  },
+  distance: {
     color: COLORS.text,
     fontSize: SIZES.medium,
   },
@@ -246,4 +272,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClubCard; 
+export default ClubCard;

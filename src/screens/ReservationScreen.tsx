@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  ScrollView, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
   SafeAreaView,
   StatusBar,
   ImageBackground,
   TextInput,
-  Alert
+  Alert,
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../styles/theme';
 import DateTimeSelector from '../components/DateTimeSelector';
@@ -22,7 +22,7 @@ type ReservationScreenProps = NativeStackScreenProps<RootStackParamList, 'Reserv
 
 const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation }) => {
   const { club } = route.params;
-  
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(club.openTime || '22:00');
   const [peopleCount, setPeopleCount] = useState(4);
@@ -43,10 +43,10 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
       'Reserva Confirmada',
       `Tu reserva en ${club.name} ha sido confirmada para ${selectedDate.toLocaleDateString()} a las ${selectedTime} para ${peopleCount} personas.`,
       [
-        { 
-          text: 'OK', 
-          onPress: () => navigation.navigate('Home')
-        }
+        {
+          text: 'OK',
+          onPress: () => navigation.navigate('Home'),
+        },
       ]
     );
   };
@@ -54,23 +54,16 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
-      
+
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Reservar en {club.name}</Text>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ImageBackground 
-          source={club.image}
-          style={styles.clubImage}
-          resizeMode="cover"
-        >
+        <ImageBackground source={club.image} style={styles.clubImage} resizeMode="cover">
           <View style={styles.overlay}>
             <Text style={styles.clubName}>{club.name}</Text>
             <View style={styles.clubInfoRow}>
@@ -83,23 +76,22 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
 
         <View style={styles.formContainer}>
           <Text style={styles.sectionTitle}>Detalles de la Reserva</Text>
-          
+
           <Text style={styles.label}>Fecha y Hora</Text>
-          <DateTimeSelector 
+          <DateTimeSelector
             initialDate={selectedDate}
             onDateChange={setSelectedDate}
             onTimeChange={setSelectedTime}
           />
 
           <Text style={styles.label}>Número de Personas</Text>
-          <PartySelector 
-            initialValue={peopleCount}
-            onValueChange={setPeopleCount}
-          />
+          <PartySelector initialValue={peopleCount} onValueChange={setPeopleCount} />
 
           <Text style={styles.sectionTitle}>Información de Contacto</Text>
-          
-          <Text style={styles.label}>Nombre Completo <Text style={styles.required}>*</Text></Text>
+
+          <Text style={styles.label}>
+            Nombre Completo <Text style={styles.required}>*</Text>
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="Tu nombre completo"
@@ -108,7 +100,9 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
             onChangeText={setName}
           />
 
-          <Text style={styles.label}>Correo Electrónico <Text style={styles.required}>*</Text></Text>
+          <Text style={styles.label}>
+            Correo Electrónico <Text style={styles.required}>*</Text>
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="tu@email.com"
@@ -118,7 +112,9 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
             onChangeText={setEmail}
           />
 
-          <Text style={styles.label}>Teléfono <Text style={styles.required}>*</Text></Text>
+          <Text style={styles.label}>
+            Teléfono <Text style={styles.required}>*</Text>
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="Tu número de teléfono"
@@ -139,10 +135,7 @@ const ReservationScreen: React.FC<ReservationScreenProps> = ({ route, navigation
             onChangeText={setSpecialRequests}
           />
 
-          <TouchableOpacity 
-            style={styles.reserveButton}
-            onPress={handleReservation}
-          >
+          <TouchableOpacity style={styles.reserveButton} onPress={handleReservation}>
             <Text style={styles.reserveButtonText}>Confirmar Reserva</Text>
           </TouchableOpacity>
         </View>
